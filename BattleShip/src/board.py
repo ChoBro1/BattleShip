@@ -17,8 +17,15 @@ class Board(object):
         self.contents = [
             [cell.Cell(self.empty_marker, self.empty_marker, self.hit_marker, self.miss_marker) for col in
              range(config.num_cols)]
-            for row in range(config.num_rows)
-        ]
+            for row in range(config.num_rows)]
+        self.coordinate_list=[]
+        self.create_coordinate_list()
+        
+
+    def create_coordinate_list(self):
+        for i in range(len(self.contents)):
+            for j in range(len(self.contents[0])):
+                self.coordinate_list.append((i,j))
 
     @property
     def num_rows(self) -> int:

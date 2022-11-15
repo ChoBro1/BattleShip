@@ -11,12 +11,14 @@ class Player(object):
     def __init__(self, player_num: int, config: game_config.GameConfig, other_players: List["Player"]) -> None:
         super().__init__()
         self.name = 'No Name'
-        self.init_name(player_num, other_players)
+        #self.chooses_player_type(player_num,other_players)
         self.board = board.Board(config)
+        self.coordinates=self.board.coordinate_list
         self.opponents = other_players[:]  # a copy of other players
         self.ships = copy.deepcopy(config.available_ships)
-        self.place_ships()
-
+        #self.place_ships()
+        self.type=None
+        self.possible_hits=[]
         # make this player the opponent of all the other players
         for opponent in other_players:
             opponent.add_opponent(self)
@@ -92,8 +94,10 @@ class Player(object):
         return all(ship_.health == 0 for ship_ in self.ships.values())
 
     def get_move(self) -> move.Move:
+
         while True:
             coords = input(f'{self.name}, enter the location you want to fire at in the form row, column: ')
+
             try:
                 firing_location = move.Move.from_str(self, coords)
             except ValueError as e:
@@ -155,4 +159,15 @@ class Player(object):
 
     def __str__(self) -> str:
         return self.name
+
+    def get_ship_coords(self):
+        lis=["*"]
+        for x in range(len(self.board.contents)):
+            for y in range(len(self.board.contents[0])):
+                if str(self.board.contents[x][y]) not in lis:
+                 self.possible_hits.append((x,y))
+                   
+                   
+    
+
 

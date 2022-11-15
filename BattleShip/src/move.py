@@ -13,6 +13,7 @@ class Move(object):
     @classmethod
     def from_str(cls, maker: "player.Player", str_rep: str) -> "Move":
         try:
+           # print(str_rep)
             row, col = str_rep.split(',')
         except ValueError:
             raise ValueError(f'{str_rep} is not a valid location.\n'
